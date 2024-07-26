@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .*
 node_modules
 public
@@ -6,3 +7,10 @@ public
 .env.development.local
 .env.test.local
 .env.production.local
+=======
+!.gitignore
+node_modules
+public
+
+!.env.example
+>>>>>>> 164ba3e (add new folder)

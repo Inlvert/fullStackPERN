@@ -14,9 +14,13 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "http-errors": "^2.0.0",
+<<<<<<< HEAD
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.14",
+=======
+    "multer": "^1.4.5-lts.1",
+>>>>>>> 164ba3e (add new folder)
     "path": "^0.12.7",
     "pg": "^8.12.0",
     "pg-hstore": "^2.3.4",
