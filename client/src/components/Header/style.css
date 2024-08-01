@@ -1,0 +1,19 @@
+nav {
+  background-color: rgb(66, 79, 101);
+}
+
+li{
+  display: inline-block;
+  margin: 0px;
+  padding: 15px;
+}
+
+.link{
+  text-decoration: none;
+  color: white;
+}
+
+li:hover{
+  background-color: rgb(17, 101, 131);
+  box-shadow: inset;
+}
