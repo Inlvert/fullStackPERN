@@ -6,8 +6,11 @@ const cartRouter = require("./cartRouter");
 userRouter
   .route("/")
   .post(userController.createUser)
-  .get(userController.getAllUsers);
+  .get(userController.getAllUsers)
+  .post(userController.findUserByEmail);
 
-  userRouter.use("/:userId/carts", findUser, cartRouter);
+userRouter.post("/find", userController.findUserByEmail);
+
+userRouter.use("/:userId/carts", findUser, cartRouter);
 
 module.exports = userRouter;
