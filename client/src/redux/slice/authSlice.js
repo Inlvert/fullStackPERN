@@ -12,7 +12,8 @@ const login = createAsyncThunk(
           data: { user },
         },
       } = await API.login(userData);
-      
+
+      console.log(user);
 
       return user;
     } catch (error) {
@@ -30,7 +31,6 @@ const refresh = createAsyncThunk(
           data: { user },
         },
       } = await API.refresh(refreshToken);
-     
 
       return user;
     } catch (error) {
@@ -48,8 +48,6 @@ const registration = createAsyncThunk(
           data: { user },
         },
       } = await API.registration(userData);
-     
-
 
       return user;
     } catch (error) {
@@ -59,7 +57,13 @@ const registration = createAsyncThunk(
 );
 
 const initialState = {
-  user: null,
+  user: {
+    id: null,
+    name: '',
+    email: '',
+    cartId: null, // Переконайтеся, що цей атрибут існує
+    // інші атрибути користувача
+  },
   isLoading: false,
   error: null,
 };

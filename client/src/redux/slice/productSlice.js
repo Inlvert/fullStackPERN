@@ -29,24 +29,32 @@ const getProducts = createAsyncThunk(
   }
 );
 
+
 const addProductToCart = createAsyncThunk(
   `${SLICE_NAME}/add`,
   async ({ productId, quantity }, thunkAPI) => {
     const state = thunkAPI.getState();
-    const user = state.user.user;
+    const user = state.auth.user;
+
+    console.log("Redux state - user:", user);
 
     if (!user) {
+      console.log("User not authenticated");
       return thunkAPI.rejectWithValue("User not authenticated");
     }
     
     try {
-      const response = await API.addProductToCart({ productId, cartId: user.cartId, quantity });
+      const response = await API.addProductToCart({ productId, cartId: user.id, quantity });
       const {
-        data: { data: cartProduct },
-      } = response;
+        data: { cartProduct },
+      } = response.data;
+      
+      console.log("Sending request to add product to cart:", { productId, cartId: user.cartId, quantity });
+      console.log("Product successfully added to cart:", cartProduct);
       return cartProduct;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+      console.error("Error adding product to cart:", error);
+      return thunkAPI.rejectWithValue(error.response?.data?.errors || "Failed to add product to cart");
     }
   }
 );

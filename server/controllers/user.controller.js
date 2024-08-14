@@ -1,5 +1,5 @@
 const e = require("express");
-const { User } = require("../models");
+const { User, Cart } = require("../models");
 const createHttpError = require("http-errors");
 const { where } = require("sequelize");
 
@@ -16,7 +16,11 @@ module.exports.createUser = async (req, res, next) => {
 
 module.exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: {
+        model: Cart
+      }
+    });
 
     res.send({ data: users });
   } catch (error) {

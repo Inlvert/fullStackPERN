@@ -74,11 +74,11 @@ export const getProducts = async (productData) => {
   return response;
 };
 
-export const addProductToCart = async ({ productId, quantity }) => {
-  const response = await httpClient.post("/products/:productId", {
-    productId,
-    quantity,
-  });
+export const addProductToCart = async ({ productId, cartId, quantity }) => {
+  if (!cartId) {
+    throw new Error("Cart ID is required");
+  }
+  const response = await httpClient.post(`/products/${productId}`, { cartId, quantity });
   return response;
 };
 

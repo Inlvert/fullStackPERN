@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasOne(models.Cart, {
         foreignKey: "userId",
+        as: "cart"
       });
       User.hasOne(models.RefreshToken, {
         foreignKey: "userId",
