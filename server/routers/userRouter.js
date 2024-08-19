@@ -11,6 +11,6 @@ userRouter
 
 userRouter.post("/find", userController.findUserByEmail);
 
-userRouter.use("/:userId/carts", findUser, cartRouter);
+// userRouter.use("/:userId/carts", findUser, cartRouter);
 
 module.exports = userRouter;

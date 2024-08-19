@@ -1,11 +1,12 @@
 const authRouter = require('express').Router();
-const authControllre = require('../controllers/authController');
-const { cheackRefreshToken } = require('../middlewares/token.mw');
+const authController = require('../controllers/authController');
+const { checkRefreshToken } = require('../middlewares/token.mw');
+const cartRouter = require('./cartRouter');
 
 
-authRouter.post('/registartion', authControllre.registration)
-authRouter.post('/login', authControllre.login)
-authRouter.post('/refresh', cheackRefreshToken, authControllre.refresh)
+authRouter.post('/registration', authController.registration)
+authRouter.post('/login', authController.login)
+authRouter.post('/refresh', checkRefreshToken, authController.refresh)
 
 
 module.exports = authRouter;
