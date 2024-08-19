@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts, addProductToCart } from "../../redux/slice/productSlice";
+import { addProductToCart, getProducts } from "../../redux/slice/productSlice";
 
 // const ProductList = () => {
 //   const products = useSelector((state) => state.product.products);
@@ -56,7 +56,7 @@ import { getProducts, addProductToCart } from "../../redux/slice/productSlice";
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
   const user = useSelector((state) => state.auth?.user);
-  const cartId = useSelector((state) => state.auth?.user?.cartId);
+  const cartId = useSelector((state) => state.auth?.user.cart);
   const dispatch = useDispatch();
 
   console.log("User ID:", user?.id);
@@ -67,11 +67,14 @@ const ProductList = () => {
   }, [dispatch]);
 
   const handleAddToCart = (productId) => {
-    console.log("Attempting to add product to cart:", { productId, userId: user?.id, cartId: user.id });
+    console.log("Attempting to add product to cart:", {
+      productId,
+      userId: user?.id,
+      cartId: user.id,
+    });
 
-     
     if (user) {
-      dispatch(addProductToCart({ productId,cartId, quantity: 1 }));
+      dispatch(addProductToCart({ productId, cartId, quantity: 1 }));
     } else {
       console.log("User not authenticated. Cannot add product to cart.");
     }
@@ -86,7 +89,9 @@ const ProductList = () => {
             <li key={index}>
               <div>
                 <h3>{`${product.name}, ${product.price} - price `}</h3>
-                <button onClick={() => handleAddToCart(product.id)}>add to cart</button>
+                <button onClick={() => handleAddToCart(product.id)}>
+                  add to cart
+                </button>
               </div>
             </li>
           ))
