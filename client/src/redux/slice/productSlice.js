@@ -29,7 +29,6 @@ const getProducts = createAsyncThunk(
   }
 );
 
-
 const addProductToCart = createAsyncThunk(
   `${SLICE_NAME}/add`,
   async ({ productId, quantity }, thunkAPI) => {
@@ -42,19 +41,31 @@ const addProductToCart = createAsyncThunk(
       console.log("User not authenticated");
       return thunkAPI.rejectWithValue("User not authenticated");
     }
-    
+
     try {
-      const response = await API.addProductToCart({ productId, cartId: user.id, quantity });
+      const response = await API.addProductToCart({
+        productId,
+        cartId: user.id,
+        quantity,
+      });
       const {
-        data: { cartProduct },
-      } = response.data;
-      
-      console.log("Sending request to add product to cart:", { productId, cartId: user.cartId, quantity });
+        data: {
+          data: { cartProduct },
+        },
+      } = response;
+
+      console.log("Sending request to add product to cart:", {
+        productId,
+        cartId: user.cartId,
+        quantity,
+      });
       console.log("Product successfully added to cart:", cartProduct);
       return cartProduct;
     } catch (error) {
       console.error("Error adding product to cart:", error);
-      return thunkAPI.rejectWithValue(error.response?.data?.errors || "Failed to add product to cart");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.errors || "Failed to add product to cart"
+      );
     }
   }
 );

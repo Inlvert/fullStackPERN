@@ -22,7 +22,7 @@ module.exports.cheackAccessToken = async (req, res, next) => {
   }
 }
 
-module.exports.cheackRefreshToken = async (req, res, next) => {
+module.exports.checkRefreshToken = async (req, res, next) => {
   try {
     const {body: {refreshToken}} = req;
 
