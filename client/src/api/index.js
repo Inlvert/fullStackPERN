@@ -43,11 +43,11 @@ httpClient.interceptors.response.use(
   },
   async function (error) {
     const {
-      response: { staus },
+      response: { status },
     } = error;
     const refreshTokenFromLS = localStorage.getItem(CONSTANTS.REFRESH_TOKEN);
 
-    if (refreshTokenFromLS && staus === 419) {
+    if (refreshTokenFromLS && status === 419) {
       const {
         data: {
           data: { tokenPair },
@@ -82,8 +82,23 @@ export const addProductToCart = async ({ productId, cartId, quantity }) => {
   return response;
 };
 
+export const getCart = async (cartData) => {
+  const response = await httpClient.post('/carts', cartData );
+  return response;
+}
+
+export const getCartTotal = async (cartData) => {
+  const response = await httpClient.post('/carts/sum', cartData )
+  return response;
+}
+
+export const deleteProductFromCP = async (cartProductId) => {
+  const response = await httpClient.delete(`cart-products/${cartProductId}`);
+  return response;
+}
+
 export const registration = async (userData) => {
-  const response = await httpClient.post("/auth/registartion", userData);
+  const response = await httpClient.post("/auth/registration", userData);
   return response;
 };
 
