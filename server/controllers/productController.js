@@ -2,9 +2,9 @@ const { Product, Cart, CartProduct } = require("../models");
 
 module.exports.createProduct = async (req, res, next) => {
   try {
-    const { body } = req;
+    const { body, file} = req;
 
-    const product = await Product.create(body);
+    const product = await Product.create({...body, picture: file.filename});
 
     res.send({ data: product });
   } catch (error) {
