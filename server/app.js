@@ -13,5 +13,7 @@ app.use(router);
 app.use(tokenErrorHendler);
 app.use(basicErrorHendler);
 
+app.use(express.static('public'))
+
 
 module.exports = app;
