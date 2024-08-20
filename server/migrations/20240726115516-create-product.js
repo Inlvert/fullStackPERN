@@ -17,6 +17,9 @@ module.exports = {
         type: Sequelize.FLOAT,
         allowNull: false,
       },
+      picture: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

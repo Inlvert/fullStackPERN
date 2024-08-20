@@ -21,6 +21,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      picture: {
+        type: DataTypes.STRING,
+      },
     },
     {
       sequelize,
