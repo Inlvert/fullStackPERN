@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import CONSTANTS from "./constants";
 import { useEffect } from "react";
 import { refresh } from "./redux/slice/authSlice";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const dispatch = useDispatch();
