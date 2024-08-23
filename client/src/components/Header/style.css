@@ -1,5 +1,5 @@
 nav {
-  background-color: rgb(66, 79, 101);
+  background-color: rgb(165, 201, 194);
 }
 
 li{
@@ -14,6 +14,6 @@ li{
 }
 
 li:hover{
-  background-color: rgb(17, 101, 131);
+  background-color: rgba(146, 151, 150, 0.485);
   box-shadow: inset;
 }
