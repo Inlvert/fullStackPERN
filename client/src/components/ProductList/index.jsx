@@ -1,57 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart, getProducts } from "../../redux/slice/productSlice";
-
-// const ProductList = () => {
-//   const products = useSelector((state) => state.product.products);
-//   const user = useSelector((state) => state.user);
-
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     dispatch(getProducts());
-//   }, [dispatch]);
-
-//   const handleAddToCart = (productId) => {
-//     dispatch(addProductToCart(productId));
-//   };
-
-//   return (
-//     <div>
-//       <h4>ProductList</h4>
-//       <ol>
-//         {products && products.length > 0 ? (
-//           products.map((products, index) => (
-//             <li key={index}>
-//               <div>
-//                 <h3>{`${products.name}, ${products.price} - price `}</h3>
-//                 <button onClick={handleAddToCart}>add to cart</button>
-//               </div>
-//             </li>
-//           ))
-//         ) : (
-//           <li>No products available.</li>
-//         )}
-//       </ol>
-//       <h4>Cart</h4>
-//       {/* <ol>
-//         {cart && cart.length > 0 ? (
-//           cart.map((item, index) => (
-//             <li key={index}>
-//               <div>
-//                 <h3>{`Product ID: ${item.productId}, Quantity: ${item.quantity}`}</h3>
-//               </div>
-//             </li>
-//           ))
-//         ) : (
-//           <li>No items in cart.</li>
-//         )}
-//       </ol> */}
-//     </div>
-//   );
-// };
-
-// export default ProductList;
+import "./style.css";
 
 const ProductList = () => {
   const products = useSelector((state) => state.product.products);
@@ -81,17 +31,28 @@ const ProductList = () => {
   };
 
   return (
-    <div>
-      <h4>ProductList</h4>
+    <div className="flex-container">
+      {/* <h4>ProductList</h4> */}
       <ol>
         {products && products.length > 0 ? (
           products.map((product, index) => (
             <li key={index}>
               <div>
-                <h3>{`${product.name}, ${product.price} - price `}</h3>
-                <button onClick={() => handleAddToCart(product.id)}>
-                  add to cart
-                </button>
+                <div className="wrapper">
+                  <img
+                    src={`http://localhost:5000/picture/${product.picture}`}
+                    alt={`${product.name}`}
+                    className="picture"
+                  />
+                  <h3>{`${product.name}`}</h3>
+                  <h3>{`${product.description}`}</h3>
+                  <div className="cover">
+                    <h4>{`${product.price} грн`}</h4>
+                    <button onClick={() => handleAddToCart(product.id)}>
+                      add to cart
+                    </button>
+                  </div>
+                </div>
               </div>
             </li>
           ))

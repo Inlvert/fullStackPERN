@@ -1,0 +1,31 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  
+}
+.cover {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  margin: auto;
+}
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+}
+
+/* .wrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+} */
+
+.picture {
+  transform: translate(0px, -50px);
+  max-width: 200px;
+  z-index: 1;
+  bottom: -50px;
+  position: relative;
+}
