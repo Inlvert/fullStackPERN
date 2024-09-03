@@ -78,24 +78,37 @@ export const addProductToCart = async ({ productId, cartId, quantity }) => {
   if (!cartId) {
     throw new Error("Cart ID is required");
   }
-  const response = await httpClient.post(`/products/${productId}`, { cartId, quantity });
+  const response = await httpClient.post(`/products/${productId}`, {
+    cartId,
+    quantity,
+  });
   return response;
 };
 
 export const getCart = async (cartData) => {
-  const response = await httpClient.post('/carts', cartData );
+  const response = await httpClient.post("/carts", cartData);
   return response;
-}
+};
 
 export const getCartTotal = async (cartData) => {
-  const response = await httpClient.post('/carts/sum', cartData )
+  const response = await httpClient.post("/carts/sum", cartData);
   return response;
-}
+};
 
 export const deleteProductFromCP = async (cartProductId) => {
   const response = await httpClient.delete(`cart-products/${cartProductId}`);
   return response;
-}
+};
+
+export const sendOnMail = async (cartId) => {
+  const response = await httpClient.post("/carts/feedback", { cartId });
+  return response;
+};
+
+export const deleteAllProductsFromCart = async (cartId) => {
+  const response = await httpClient.delete(`/cart-products/del/${cartId}`);
+  return response;
+};
 
 export const registration = async (userData) => {
   const response = await httpClient.post("/auth/registration", userData);
