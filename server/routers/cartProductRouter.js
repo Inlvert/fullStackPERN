@@ -9,4 +9,8 @@ cartProductRouter
   .route("/:cartProductId")
   .delete(cartProductController.deleteProductFromCartProduct);
 
+cartProductRouter
+  .route("/del/:cartId")
+  .delete(cartProductController.deleteAllProductFromCart);
+
 module.exports = cartProductRouter;
