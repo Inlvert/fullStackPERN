@@ -4,11 +4,14 @@ import * as API from "../../api";
 const SLICE_NAME = "carts";
 
 let initialState = {
-  cart: null,
+  cart: {
+    CartProducts: [],
+  },
   totalPrice: 0,
   products: [],
   isLoading: false,
   error: null,
+  sendOrder: null,
 };
 
 const getCart = createAsyncThunk(
@@ -63,6 +66,23 @@ const deleteProductFromCP = createAsyncThunk(
   }
 );
 
+const sendOnMail = createAsyncThunk(
+  `${SLICE_NAME}/send`,
+  async (cartId, thunkAPI) => {
+    try {
+      const response = await API.sendOnMail(cartId);
+
+      const {
+        data: { data: cart },
+      } = response;
+
+      return cart;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+);
+
 const cartSlice = createSlice({
   name: SLICE_NAME,
   initialState,
@@ -74,10 +94,10 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getCart.pending, (state) => {
-      state.isLoading = false;
+      state.isLoading = true;
     });
     builder.addCase(getCart.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.cart = action.payload;
     });
     builder.addCase(getCart.rejected, (state, action) => {
@@ -85,10 +105,10 @@ const cartSlice = createSlice({
       state.error = action.payload;
     });
     builder.addCase(getCartTotalPrice.pending, (state) => {
-      state.isLoading = false;
+      state.isLoading = true;
     });
     builder.addCase(getCartTotalPrice.fulfilled, (state, action) => {
-      state.isLoading = true;
+      state.isLoading = false;
       state.totalPrice = action.payload;
     });
     builder.addCase(getCartTotalPrice.rejected, (state, action) => {
@@ -114,6 +134,19 @@ const cartSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(sendOnMail.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(sendOnMail.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.sendOrder = action.payload;
+      state.cart.CartProducts = []; // Очищення кошика після успішного замовлення
+      state.totalPrice = 0;
+    });
+    builder.addCase(sendOnMail.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    })
   },
 });
 
@@ -121,6 +154,6 @@ const { reducer: cartReducer, actions } = cartSlice;
 
 export const { clearCart } = actions;
 
-export { getCart, getCartTotalPrice, deleteProductFromCP };
+export { getCart, getCartTotalPrice, deleteProductFromCP, sendOnMail};
 
 export default cartReducer;
