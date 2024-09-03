@@ -4,7 +4,9 @@ import {
   deleteProductFromCP,
   getCart,
   getCartTotalPrice,
+  sendOnMail,
 } from "../../redux/slice/cartSlice";
+import { deleteAllProductFromCart } from "../../redux/slice/cartProductSlice";
 
 const CartList = () => {
   const cart = useSelector((state) => state.cart.cart);
@@ -27,11 +29,18 @@ const CartList = () => {
     console.log("Deleted Product ID:", cartProductId);
   };
 
+  const handleSendOrderOnMail = (cartId) => {
+    dispatch(sendOnMail(cartId));
+    dispatch(deleteAllProductFromCart(cartId));
+  };
 
   return (
     <div>
       <h3>Cart List</h3>
       <p>Total Price: {cartPrice.totalPrice} $</p>
+      <button onClick={() => handleSendOrderOnMail(cartId)}>
+        send order on mail
+      </button>
       {/* <h3>Cart Id is: {cart.id}</h3> */}
       {cart?.CartProducts && cart.CartProducts.length > 0 ? (
         <ul>

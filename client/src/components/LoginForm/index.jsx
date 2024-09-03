@@ -25,6 +25,7 @@ const LoginForm = () => {
 
   return (
     <div>
+      <meta name="keywords" content="React, JavaScript, semantic markup, html" title="login"/>
       <h3>LoginForm</h3>
       <Formik
         initialValues={initialValues}

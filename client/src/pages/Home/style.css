@@ -1,0 +1,14 @@
+.coverBtn{
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: DodgerBlue;
+}
+
+.coverBtn > button {
+  background-color: rgb(165, 201, 194);
+  border-style: none;
+  margin: 5px auto;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
