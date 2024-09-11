@@ -100,6 +100,13 @@ export const deleteProductFromCP = async (cartProductId) => {
   return response;
 };
 
+export const updateQuantityProduct = async (cartProductId, quantity) => {
+  const response = await httpClient.post(`cart-products/${cartProductId}`, {
+    quantity,
+  });
+  return response;
+};
+
 export const sendOnMail = async (cartId) => {
   const response = await httpClient.post("/carts/feedback", { cartId });
   return response;
