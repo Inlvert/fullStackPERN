@@ -51,3 +51,23 @@ module.exports.deleteAllProductFromCart = async (req, res, next) => {
     next(error);
   }
 };
+
+module.exports.updateProductQuantity = async (req, res, next) => {
+  try {
+    const {
+      params: { cartProductId },
+      body: { quantity },
+    } = req;
+
+    const foundCartProduct = await CartProduct.findByPk(cartProductId, {
+      include: Product,
+    });
+
+    foundCartProduct.quantity = quantity;
+    await foundCartProduct.save();
+
+    res.send({ data: foundCartProduct });
+  } catch (error) {
+    next(error);
+  }
+};

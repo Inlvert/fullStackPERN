@@ -7,7 +7,8 @@ cartProductRouter
 
 cartProductRouter
   .route("/:cartProductId")
-  .delete(cartProductController.deleteProductFromCartProduct);
+  .delete(cartProductController.deleteProductFromCartProduct)
+  .post(cartProductController.updateProductQuantity);
 
 cartProductRouter
   .route("/del/:cartId")
