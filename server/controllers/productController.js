@@ -90,12 +90,10 @@ module.exports.addProductToCart = async (req, res, next) => {
       defaults: { quantity: quantity || 1 },
     });
 
-    if (created) {
-      console.log("New product added to cart:", cartProduct);
-    } else {
-      cartProduct.quantity += quantity || 1;
+    if (!created) {
+      // Якщо товар вже є в кошику, оновлюємо кількість
+      cartProduct.quantity = Number(cartProduct.quantity) + Number(quantity || 1);
       await cartProduct.save();
-      console.log("Updated product quantity in cart:", cartProduct);
     }
 
     res.status(200).json({ message: "Product added to cart", cartProduct });
