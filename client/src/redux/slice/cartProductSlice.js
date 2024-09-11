@@ -28,6 +28,25 @@ const deleteAllProductFromCart = createAsyncThunk(
   }
 );
 
+const updateQuantity = createAsyncThunk(
+  `${SLICE_NAME}/update`,
+  async ({ cartProductId, quantity }, thunkAPI) => {
+    try {
+      const response = await API.updateQuantityProduct(cartProductId, quantity);
+
+      const {
+        data: {
+          data: { foundCartProduct },
+        },
+      } = response;
+
+      return foundCartProduct
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+);
+
 const cartProductSlice = createSlice({
   name: SLICE_NAME,
   initialState,
@@ -43,11 +62,34 @@ const cartProductSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(updateQuantity.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(updateQuantity.fulfilled, (state, action) => {
+      // state.isLoading = false;
+      // const updatedProduct = action.payload;
+      // state.products = state.products.map((product) =>
+      //   product.id === updatedProduct.id ? updatedProduct : product
+      // );
+      state.isLoading = false;
+
+      // Оновлюємо конкретний товар у списку
+      const index = state.products.findIndex(
+        (product) => product.id === action.payload.cartProductId
+      );
+      if (index !== -1) {
+        state.products[index].quantity = action.payload.quantity;
+      }
+    });
+    builder.addCase(updateQuantity.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
   },
 });
 
 const { reducer: cartProductReducer, actions } = cartProductSlice;
 
-export { deleteAllProductFromCart };
+export { deleteAllProductFromCart, updateQuantity };
 
 export default cartProductReducer;
