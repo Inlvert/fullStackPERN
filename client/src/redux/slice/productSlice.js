@@ -5,6 +5,7 @@ const SLICE_NAME = "products";
 
 let initialState = {
   products: [],
+  product: null,
   cart: [],
   isLoading: false,
   error: null,
@@ -15,6 +16,43 @@ const getProducts = createAsyncThunk(
   async (productData, thunkAPI) => {
     try {
       const response = await API.getProducts(productData);
+
+      const {
+        data: { data: products },
+      } = response;
+
+      console.log(response);
+
+      return products;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+);
+
+const getProductById = createAsyncThunk(
+  `${SLICE_NAME}/getProductById`,
+  async (productId, thunkAPI) => {
+    try {
+      const response = await API.getProductById(productId);
+
+      const {
+        data: { data: product },
+      } = response;
+
+      return product;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.data.errors);
+    }
+  }
+
+)
+
+const getProductsDesc = createAsyncThunk(
+  `${SLICE_NAME}/getDesc`,
+  async (productData, thunkAPI) => {
+    try {
+      const response = await API.getProductsDesc(productData);
 
       const {
         data: { data: products },
@@ -75,7 +113,7 @@ const productSlice = createSlice({
   initialState,
   extraReducers: (builder) => {
     builder.addCase(getProducts.pending, (state) => {
-      state.isLoading = false;
+      state.isLoading = true;
     });
     builder.addCase(getProducts.fulfilled, (state, action) => {
       state.isLoading = false;
@@ -96,11 +134,34 @@ const productSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     });
+    builder.addCase(getProductsDesc.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProductsDesc.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.products = action.payload;
+    });
+    builder.addCase(getProductsDesc.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+    builder.addCase(getProductById.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getProductById.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.product = action.payload;
+    });
+    builder.addCase(getProductById.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    });
+
   },
 });
 
 const { reducer: productsReducer, actions } = productSlice;
 
-export { getProducts, addProductToCart };
+export { getProducts, addProductToCart, getProductsDesc, getProductById };
 
 export default productsReducer;

@@ -2,9 +2,23 @@ const { Product, Cart, CartProduct } = require("../models");
 
 module.exports.createProduct = async (req, res, next) => {
   try {
-    const { body, file} = req;
+    const { body, file } = req;
 
-    const product = await Product.create({...body, picture: file.filename});
+    const product = await Product.create({ ...body, picture: file.filename });
+
+    res.send({ data: product });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.getProductById = async (req, res, next) => {
+  try {
+    const {
+      params: { productId },
+    } = req;
+
+    const product = await Product.findByPk(productId);
 
     res.send({ data: product });
   } catch (error) {
@@ -15,7 +29,18 @@ module.exports.createProduct = async (req, res, next) => {
 module.exports.findAllProducts = async (req, res, next) => {
   try {
     const products = await Product.findAll();
-    
+
+    res.send({ data: products });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.findAllProductsOrder = async (req, res, next) => {
+  try {
+    const products = await Product.findAll({
+      order: [["price", "DESC"]], // Сортувати по ціні у порядку спадання
+    });
     res.send({ data: products });
   } catch (error) {
     next(error);
@@ -80,7 +105,10 @@ module.exports.addProductToCart = async (req, res, next) => {
     // Знайти або створити кошик
     let cart = await Cart.findByPk(cartId);
     if (!cart) {
-      console.log("Cart not found, creating new cart for user ID:", req.user.id);
+      console.log(
+        "Cart not found, creating new cart for user ID:",
+        req.user.id
+      );
       cart = await Cart.create({ userId: req.user.id });
     }
 
@@ -92,7 +120,8 @@ module.exports.addProductToCart = async (req, res, next) => {
 
     if (!created) {
       // Якщо товар вже є в кошику, оновлюємо кількість
-      cartProduct.quantity = Number(cartProduct.quantity) + Number(quantity || 1);
+      cartProduct.quantity =
+        Number(cartProduct.quantity) + Number(quantity || 1);
       await cartProduct.save();
     }
 

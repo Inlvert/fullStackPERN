@@ -74,6 +74,16 @@ export const getProducts = async (productData) => {
   return response;
 };
 
+export const getProductById = async (productId) => {
+  const response = await httpClient.get(`/products/${productId}`);
+  return response;
+}
+
+export const getProductsDesc = async (productData) => {
+  const response = await httpClient.get(`/products/desc`, productData);
+  return response;
+};
+
 export const addProductToCart = async ({ productId, cartId, quantity }) => {
   if (!cartId) {
     throw new Error("Cart ID is required");

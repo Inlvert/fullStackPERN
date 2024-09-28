@@ -1,5 +1,12 @@
-nav {
-  background-color: rgb(165, 201, 194);
+@import '../../common/styles/template.scss';
+
+
+.lightTheme{
+  @extend %lightTheme
+}
+
+.darkTheme{
+  @extend %darkTheme
 }
 
 li{
@@ -8,7 +15,7 @@ li{
   padding: 15px;
 }
 
-.link{
+.link {
   text-decoration: none;
   color: white;
 }

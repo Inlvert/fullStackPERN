@@ -3,6 +3,7 @@ import Header from "../../components/Header";
 import ProductList from "../../components/ProductList";
 import UncontrolledExample from "../../components/UncontrolledExample";
 import './style.css'
+import ProductDetails from "../../components/ProductDetails";
 
 const HomePage = () => {
   return (
@@ -13,6 +14,7 @@ const HomePage = () => {
       <UncontrolledExample />
       <h3>HomePage</h3>
       <ProductList />
+      <ProductDetails />
     </div>
   );
 };

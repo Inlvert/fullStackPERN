@@ -7,6 +7,11 @@ productRouter
   .post(imageUpload.single("picture"), productController.createProduct)
   .get(productController.findAllProducts);
 
-productRouter.route("/:productId").post(productController.addProductToCart);
+productRouter.route("/desc").get(productController.findAllProductsOrder);
+
+productRouter
+  .route("/:productId")
+  .post(productController.addProductToCart)
+  .get(productController.getProductById);
 
 module.exports = productRouter;

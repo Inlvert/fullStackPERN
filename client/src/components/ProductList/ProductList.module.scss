@@ -1,9 +1,10 @@
-.flex-container {
+@import "../../common/styles/template.scss";
+
+.flexContainer {
   display: flex;
   flex-direction: column;
   text-align: center;
   align-items: center;
-  
 }
 .cover {
   display: flex;
@@ -28,4 +29,12 @@
   z-index: 1;
   bottom: -50px;
   position: relative;
+}
+
+.lightTheme {
+  @extend %lightTheme;
+}
+
+.darkTheme {
+  @extend %darkTheme;
 }
